@@ -9,6 +9,6 @@ About
 ------------   
   
   
-![pic](/fire888/parametric/blob/master/envElectron/preview.jpg)
+![pic](https://github.com/fire888/parametric/blob/master/envElectron/preview.jpg)
 
 
