@@ -1,4 +1,4 @@
-# THREEJS render to files :floppy_disk: # 
+# Writer render in files :floppy_disk: # 
 
 ![language](https://img.shields.io/badge/code-es6-green.svg) 
 ![Build status](https://img.shields.io/badge/build-passing-green.svg) 
@@ -9,11 +9,6 @@ About
 ------------   
   
   
-![pic](https://github.com/fire888/wowecube/blob/master/assets/preview.png)
+![pic](/fire888/parametric/blob/master/envElectron/preview.jpg)
 
-```javascript
-git init
-git remote add origin https://github.com/fire888/wowecube.git
-git pull origin master
-npm run start
-```
+
