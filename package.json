@@ -1,0 +1,27 @@
+{
+  "name": "front_3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^9.0.4",
+    "three": "^0.117.1",
+    "pixi.js-legacy": "^5.3.0",
+    "css-loader": "^3.5.2",
+    "file-loader": "^4.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.1.3",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1",
+    "webpack-merge": "^4.2.1"
+  },
+  "scripts": {
+    "startWrite": "electron ./envElectron",
+    "start": "webpack-dev-server --env.notWrite=true --open --config envWebpackConfig/webpackDev.js",
+    "build": "webpack --env.notWrite=true --config envWebpackConfig/webpackProd.js"
+  },
+  "dependencies": {}
+}
