@@ -15,6 +15,7 @@
     overflow: hidden;
     background-color: black;
     text-align: center;
+    color: white;
   }
 
   canvas {
@@ -45,8 +46,69 @@
     background: #333333;
   }
 
+  .i {
+    background-color: #00000099;
+    position: absolute;
+    z-index: 10;
+    border: 1px solid #ffffff;
+    padding: 1vh;
+    border-radius: 30px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 3px;
+    top: 3px;
+    cursor: pointer;
+  }
+
+  .about {
+    background-color: #00000099;
+    position: absolute;
+    z-index: 8;
+    border: 1px solid #ffffff;
+    padding: 1vh;
+    border-radius: 30px;
+    width: 4vh;
+    height: 4vh;
+    right: 3px;
+    top: 3px;
+    width: 300px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  a {
+    color: #884444;
+  }
+
+  .hidden{
+    display: none;
+  }
+
 </style>
 </head>
 <body>
+<div class="i">i</div>
+<div class="about hidden">
+  <p>by: <a href="http://otrisovano.ru">www.otrisovano.ru</a></p>
+  <p>source: <a href="http://github.com/fire888/parametric">http://github.com/fire888/parametric</a></p>
+</div>
+<script> 
+var b = document.querySelector('.i').addEventListener('click', function(e) {
+  var mess = document.querySelector('.about')
+  if (mess.classList.contains('hidden')) {
+    mess.classList.remove('hidden')
+    e.target.innerText = 'x'
+  } else {
+    mess.classList.add('hidden')
+    e.target.innerText = 'i'
+  }
+})
+</script>
 </body>
 </html>

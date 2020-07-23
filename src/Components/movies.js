@@ -13,35 +13,36 @@ const D = 400
 
 
 
+
 // FOUNTAIN MOVIE ////////////////////////////////////
 
 exports.movieFountain = arr => {
-    const arrSprites = arr
     const data = []
+    const spd = PI / 70
+    let dist = 0
 
-    for (let i = 0; i < arrSprites.length; i++) {
-        data.push([
-            PI / arr.length * i,                                        // 0 dist to save 
-            PI / 70,                                                    // 1 speed 
-            Math.random() + .5,                                         // 2 heightY
-            (Math.random() * 1.5 + .4) * (Math.random() < .5 ? 1 : -1), // 3 widthX
-        ])
-        //data[i][0] += data[i][1] * 300000 
+    for (let i = 0; i < arr.length; i++) {
+        data.push({
+            h: ran() + .5,
+            w: (ran() * 1.5 + .4) * (ran() < .5 ? 1 : -1),
+        })
     }
 
     return function () {
-        for (let i = 0; i < arrSprites.length; i ++) {
-            data[i][0] += (data[i][1])
+        dist += spd
 
-            const s = arrSprites[i]
+        for (let i = 0; i < arr.length; i ++) {
+            const d = PI / arr.length * i + dist
 
-            s.y = -Math.abs(Math.sin((data[i][0]) % PI)) * 450 * data[i][2]
-            s.x = Math.abs(Math.sin((data[i][0] *.5) % hPI)) * 200 * data[i][3]
-            s.scale.y = Math.cos(data[i][0] * 4) * s.scale.x
-            s.alpha = ((arrSprites[i].y / (-700) / 1)) * 10
+            const s = arr[i]
+
+            s.y = -abs(sin(d % PI)) * data[i].h * 450
+            s.x = abs(sin((d *.5) % hPI)) * data[i].w * 200
+            s.scale.y = cos(d * 4) * s.scale.x
+            s.alpha = arr[i].y / (-700) * 10
         }
 
-        return abs(data[0][0] % PI2) < data[0][1]
+        return abs(data[0].d % PI2) < spd
     }
 }
 
@@ -50,37 +51,23 @@ exports.movieFountain = arr => {
 
 // INFINITIE MOVIE ////////////////////////////////////
 
-
-exports.infinitieMovie = function (arr) {
-    const arrSprites = arr
-    
-    const data = []
+exports.infinitieMovie = function (arr) {    
     let dist = 0
     const spd = PI2 / 80
 
-    for (let i = 0; i < arrSprites.length; i++) {
-        data.push([
-            PI2 / arrSprites.length * i,                           // 0 dist to save 
-            //(Math.random() + .5) * 0.02,
-            PI2 / 80,                                // 1 speed 
-            Math.random() + .5,                                         // 2 heightY
-            (Math.random() * 1.5 + .4) * (Math.random() < .5 ? 1 : -1), // 3 widthX
-        ])
-    }
 
     return function () {
         dist += spd 
 
-        for (let i = 0; i < arrSprites.length; i ++) {
-            data[i][0] += spd
+        for (let i = 0; i < arr.length; i ++) {
+            const val = PI2 / arr.length * i + dist
 
-            const f = data[i][0] 
+            const s = arr[i]
 
-            const s = arrSprites[i]
-            s.y = Math.sin(f) * 300 * Math.cos(dist * 0.2)
-            s.x = Math.sin(f * 4) * 350 * Math.cos(dist * 0.4)
-            s.scale.y = Math.cos(f * 2) * 2 + .2 
-            s.scale.x = Math.cos(f * 4) * 2 + .2 
+            s.y = sin(val) * cos(dist * 0.2) * 300 
+            s.x = sin(val * 4) * cos(dist * 0.4) * 350
+            s.scale.y = cos(val * 2) * 2 + .2 
+            s.scale.x = cos(val * 4) * 2 + .2 
         }
 
         return abs(dist * 0.4 % PI2) < spd * 0.4
@@ -92,39 +79,33 @@ exports.infinitieMovie = function (arr) {
 
 // CIRCLE MOVIE /////////////////////////////////////
 
-
-exports.circleMovie = function (arr) {
-    const arrSprites = arr
-    
+exports.circleMovie = function (arr) {    
     const data = [],
-    spdVec = PI2 / 100,
-    spdOffset = PI / 100
+    spd = PI2 / 100
+    let dist = 0
 
-    for (let i = 0; i < arrSprites.length; i++) {
-        data.push({
-            vector: PI2 / arrSprites.length * i, 
-            offset: Math.random() * PI,      
-        })
+    for (let i = 0; i < arr.length; i++) {
+        data.push(Math.random() * PI)
     }
 
     return function () { 
-        for (let i = 0; i < arrSprites.length; i ++) {
+        dist += spd
 
-            data[i].vector += spdVec
-            const vec = data[i].vector
+        for (let i = 0; i < arr.length; i ++) {
+            const vec = dist + PI2 / arr.length * i
             
-            data[i].offset += spdOffset
+            data[i] += spd
 
-            const normOffset = Math.sin(data[i].offset % hPI)         
+            const normOffset = sin(data[i] % hPI)         
             const r = 350 * normOffset
 
-            const s = arrSprites[i]
-            s.y = Math.sin(vec) * r
-            s.x = Math.cos(vec) * r
+            const s = arr[i]
+            s.y = sin(vec) * r
+            s.x = cos(vec) * r
             s.scale.set(normOffset)
         }
 
-        return data[0][2] % hPI < PI / 100
+        return dist % hPI < spd
     }   
 }
 
@@ -132,7 +113,6 @@ exports.circleMovie = function (arr) {
 
 
 //////////////////////////////////////////////////////
-
 
 exports.movieSp = arr => {   
     let r = 0
@@ -167,6 +147,7 @@ exports.movieSp = arr => {
         return abs(data[0][0] % PI2) < data[0][1]
     }
 }
+
 
 
 
@@ -232,6 +213,7 @@ exports.movieScaleMatr = function (arr) {
 
 
 
+
 // SCALE SNAKE ///////////////////////////////////////////////
 
 exports.movieScaleSnake = function (arr) {
@@ -257,6 +239,7 @@ exports.movieScaleSnake = function (arr) {
         return Math.abs(data[0].currDist % PI2) < data[0].speed
     } 
 }
+
 
 
 
@@ -287,9 +270,4 @@ exports.movieTonnel = function (arr) {
         return Math.abs(data[0].currDist % PI2) < data[0].speed
     } 
 }
-
-
-
-
-
 

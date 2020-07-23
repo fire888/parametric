@@ -12,7 +12,9 @@ const createComposition08 = require('./Entities/comp08_rectsSnake')
 const createComposition09 = require('./Entities/comp09_corridorTri')
 
 
-function application () {
+
+
+function createApp () {
     const arrConstructors = [
         createComposition01,
         createComposition02,  
@@ -27,22 +29,22 @@ function application () {
 
     const app = createPIXIApp()
     const views = []
-    arrConstructors.forEach(createView => { 
-        views.push(createView())
-    })
+    arrConstructors.forEach(createView => views.push(createView()))
     const checkerIsComplete = initCheckerIsComplete()
 
     let currentViewNum = 8
     const TIME = 10000
 
     return {
-        views, 
+        views,
+
         showView: num => {
             clearTimeout(slideTimer)
             app.stage.removeChild(views[currentViewNum].container)
             currentViewNum = num
             app.stage.addChild(views[currentViewNum].container)
         },
+
         startOnlyUpdate: () => {
             let time = Date.now()
         
@@ -61,7 +63,7 @@ function application () {
         },
 
         startWriteFramesAndUpdate: () => {
-            const render = () => {
+            function render () {
                 window.saveFile(app.renderer)
                     .then(() => {
                         const isLoopDone = views[currentViewNum].update()
@@ -87,22 +89,24 @@ function application () {
 
 
 
+
 function initCheckerIsComplete () {
-    const max_loops = 4
+    const max_loops = 10
     let currentLoop = 0
     let countFrames = 0
 
     return function (isLoop) {
-        countFrames ++;
+        countFrames ++
 
         if (isLoop) {
             currentLoop ++
-            console.log('loop: ', currentLoop, ', frames: ', countFrames)
+            console.log(`loop: ${ currentLoop }, frames: ${ countFrames }`)
         }
 
         return currentLoop < max_loops
     }
 }
+
 
 
 
@@ -126,9 +130,10 @@ function createStartButtons ({ views, showView }) {
     }
 
     butts[0].classList.add('current')
-
     document.body.appendChild(cont)
 }
+
+
 
 
 function resize() {
@@ -146,12 +151,14 @@ function resize() {
 window.addEventListener('resize', resize) 
 
 
-const prog = application()
-createStartButtons(prog)
-prog.startChangeView()
+
+
+const app = createApp()
+createStartButtons(app)
+app.startChangeView()
 window.saveFile 
-    ? prog.startWriteFramesAndUpdate() 
-    : prog.startOnlyUpdate()
+    ? app.startWriteFramesAndUpdate() 
+    : app.startOnlyUpdate()
 
 
 resize()
