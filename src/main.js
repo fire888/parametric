@@ -139,14 +139,18 @@ function createStartButtons ({ views, showView }) {
 function resize() {
     const 
     w = window.innerWidth,
-    h = window.innerHeight
-    s = Math.min(w, h)
-    ss = s - s * 0.08 + 'px'
+    h = window.innerHeight,
+    s = Math.max(Math.min(w, h), 800),
+    ss = s - s * 0.08 + 'px',
 
-    can = document.querySelector('canvas')
+    can = document.querySelector('canvas'),
     buttCont = document.querySelector('.cont-butt')
 
     can.style.width = can.style.height = buttCont.style.width = ss
+    w < h 
+        ? can.style.marginTop = '60px'
+        : can.style.marginTop = '0' 
+    
 }
 window.addEventListener('resize', resize) 
 
