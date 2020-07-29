@@ -6,7 +6,7 @@ module.exports = () => {
         height: 800, 
         backgroundColor: 0x000000, 
         resolution: window.devicePixelRatio || 1,
-        resizeTo: document.querySelector("#canvas-app"), 
+        //resizeTo: document.querySelector("#canvas-app"), 
         antialias: true,
         preserveDrawingBuffer: true,
     })
