@@ -1,14 +1,14 @@
-const createPIXIApp = require('../Entities/app')
+const createPIXIApp = require('./Entities/app')
 
-const createComposition01 = require('../Entities/comp01_fountain')
-const createComposition02 = require('../Entities/comp02_infinitie')
-const createComposition03 = require('../Entities/comp03_circle')
-const createComposition04 = require('../Entities/comp04_flyEarth')
-const createComposition05 = require('../Entities/comp05_spiralEyes')  
-const createComposition06 = require('../Entities/comp06_spiralLines')
-const createComposition07 = require('../Entities/comp07_rectsScale')
-const createComposition08 = require('../Entities/comp08_rectsSnake') 
-const createComposition09 = require('../Entities/comp09_corridorTri')
+const createComposition01 = require('./Entities/comp01_fountain')
+const createComposition02 = require('./Entities/comp02_infinitie')
+const createComposition03 = require('./Entities/comp03_circle')
+const createComposition04 = require('./Entities/comp04_flyEarth')
+const createComposition05 = require('./Entities/comp05_spiralEyes')  
+const createComposition06 = require('./Entities/comp06_spiralLines')
+const createComposition07 = require('./Entities/comp07_rectsScale')
+const createComposition08 = require('./Entities/comp08_rectsSnake') 
+const createComposition09 = require('./Entities/comp09_corridorTri')
 
 
 exports.createApp = function () {
