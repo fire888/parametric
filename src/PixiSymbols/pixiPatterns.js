@@ -9,10 +9,11 @@ const createComposition06 = require('./Entities/comp06_spiralLines')
 const createComposition07 = require('./Entities/comp07_rectsScale')
 const createComposition08 = require('./Entities/comp08_rectsSnake') 
 const createComposition09 = require('./Entities/comp09_corridorTri')
-
+const createComposition10 = require('./Entities/comp10_down')
 
 exports.createApp = function () {
     const arrConstructors = [
+        /*
         createComposition01,
         createComposition02,  
         createComposition03,  
@@ -21,7 +22,9 @@ exports.createApp = function () {
         createComposition06, 
         createComposition07,
         createComposition08,
-        createComposition09,  
+        createComposition09,
+        */
+        createComposition10
     ]
 
     const app = createPIXIApp()
@@ -29,13 +32,13 @@ exports.createApp = function () {
     arrConstructors.forEach(createView => views.push(createView()))
     const checkerIsComplete = initCheckerIsComplete()
 
-    let currentViewNum = 8
+    let currentViewNum = arrConstructors.length
     const TIME = 10000
     let slideTimer
 
     function showView (num) { 
             clearTimeout(slideTimer)
-            app.stage.removeChild(views[currentViewNum].container)
+            views[currentViewNum] && app.stage.removeChild(views[currentViewNum].container)
             currentViewNum = num
             app.stage.addChild(views[currentViewNum].container)
     }
@@ -43,9 +46,9 @@ exports.createApp = function () {
 
     function startChangeView() {
         function changeView () {
-                app.stage.removeChild(views[currentViewNum].container)
+                views[currentViewNum] && app.stage.removeChild(views[currentViewNum].container)
                 currentViewNum ++
-                currentViewNum > 8 && (currentViewNum = 0)
+                currentViewNum >= arrConstructors.length && (currentViewNum = 0)
                 slideTimer = setTimeout(changeView, TIME)
                 app.stage.addChild(views[currentViewNum].container)
         }

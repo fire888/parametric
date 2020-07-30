@@ -1,0 +1,50 @@
+/**
+ * https://www.pinterest.ru/pin/720576009118734096/
+ */
+
+
+const PIXI = window.PIXI = require('pixi.js-legacy')
+const forms = require('./figures')
+const { banditMovie } = require('../Components/movies2')
+
+
+const D = 400
+//const NUM = 30
+const L = 5
+const N = 4
+const S = 120
+
+
+module.exports = function () {
+    const container = new PIXI.Container()
+    container.y = S //= D
+    container.x = S //= D
+
+    const arr = []
+
+    for (let i = 0; i < L; i ++) {
+        arr.push([])
+        for (let j = 0; j < N; j ++) {
+            let sp = forms.createStar(S/2, Math.ceil(Math.random() * 10))
+            container.addChild(sp)
+            arr[arr.length - 1].push(sp)
+            sp.x = i * S
+            sp.y = j * S
+        }
+    }
+
+
+
+    //for (let i = 0; i < NUM; i ++) {
+    //    let sp = forms.createStar(200, 3)
+    //    container.addChild(sp)
+    //    arr.push(sp)
+    //}
+
+    const update = banditMovie(arr, S)
+
+    return {
+        container,
+        update,
+    }
+}
