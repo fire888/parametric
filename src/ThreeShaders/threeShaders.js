@@ -1,18 +1,19 @@
 const THREE = require('three')
 const { createStudio } = require('./Entities/studio')
-const { simpleRender } = require('./Effects/SimpleRen')
+const { effectSimple } = require('./Effects/SimpleRen')
 
 
 
 
 exports.createApp = function () {
     const studio = createStudio()
-    simpleRender()
+    const effect = effectSimple()
+
 
     const plane = new THREE.Mesh(
         new THREE.PlaneGeometry(1000, 1000),
-        //shader
-        new THREE.MeshBasicMaterial({ color: 0xFFff00 })
+        effect
+        //new THREE.MeshBasicMaterial({ color: 0xFFff00 })
     )
     studio.addToScene(plane)
     plane.rotation.x = Math.PI
