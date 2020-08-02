@@ -1,4 +1,5 @@
 const THREE = require('three')
+const { OrbitControls } = require('three/examples/jsm/controls/OrbitControls')
 
 const DATA = {
     w: 800,
@@ -13,6 +14,8 @@ exports.createStudio = function () {
 
     let camera, scene, renderer
 
+
+
     renderer = new THREE.WebGLRenderer({ antialias: false, })
     renderer.setPixelRatio(window.devicePixelRatio)
     document.body.appendChild(renderer.domElement)
@@ -22,6 +25,8 @@ exports.createStudio = function () {
     camera = new THREE.PerspectiveCamera(75, DATA.w/DATA.h, 1, 1000)
     camera.position.set(0, 0, -100)
     camera.lookAt(scene.position)
+
+    new OrbitControls( camera, renderer.domElement );
 
     const resize = () => {
         renderer.setSize(DATA.w, DATA.h)

@@ -1,6 +1,6 @@
 const THREE = require('three')
 const { createStudio } = require('./Entities/studio')
-const { effectSimple } = require('./Effects/SimpleRen')
+const { effectSimple } = require('./Effects/effectSimple')
 
 
 
@@ -10,17 +10,14 @@ exports.createApp = function () {
     const effect = effectSimple()
 
 
-    const plane = new THREE.Mesh(
-        new THREE.PlaneGeometry(1000, 1000),
-        effect
-        //new THREE.MeshBasicMaterial({ color: 0xFFff00 })
-    )
-    studio.addToScene(plane)
-    plane.rotation.x = Math.PI
-    plane.position.z = 600
-
-
-
+    //const plane = new THREE.Mesh(
+    //    new THREE.PlaneGeometry(1000, 1000),
+    //    effect
+    //    //new THREE.MeshBasicMaterial({ color: 0xFFff00 })
+    //)
+    //plane.rotation.x = Math.PI
+    //plane.position.z = 600
+    studio.addToScene(effect.obj)
 
 
     return {
@@ -33,7 +30,7 @@ exports.createApp = function () {
                 const delta = currentTime - time
                 const count = Math.floor(delta / 33.3333)
                 if (count > 0) {
-                    console.log('update')
+                    effect.update()
                     studio.drawFrame()
                     time = currentTime
                 }
