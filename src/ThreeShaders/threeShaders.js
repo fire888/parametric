@@ -1,4 +1,3 @@
-const THREE = require('three')
 const { createStudio } = require('./Entities/studio')
 const { effectSimple } = require('./Effects/effectSimple')
 
@@ -8,7 +7,7 @@ const { effectSimple } = require('./Effects/effectSimple')
 exports.createApp = function () {
     const studio = createStudio()
     const effect = effectSimple()
-
+    studio.addToScene(effect.obj)
 
     //const plane = new THREE.Mesh(
     //    new THREE.PlaneGeometry(1000, 1000),
@@ -17,8 +16,6 @@ exports.createApp = function () {
     //)
     //plane.rotation.x = Math.PI
     //plane.position.z = 600
-    studio.addToScene(effect.obj)
-
 
     return {
         startOnlyUpdate () {

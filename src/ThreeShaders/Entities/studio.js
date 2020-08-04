@@ -45,6 +45,7 @@ exports.createStudio = function () {
     addToScene(box)
 
     return {
+        camera,
         renderer,
         drawFrame,
         addToScene,
