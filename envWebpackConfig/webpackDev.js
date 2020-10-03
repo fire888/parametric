@@ -2,7 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const appCommonConfig = require('./webpackCommon.js');
 
-module.exports = env => merge( appCommonConfig(env), {
+module.exports = env => merge.merge( appCommonConfig(env), {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
