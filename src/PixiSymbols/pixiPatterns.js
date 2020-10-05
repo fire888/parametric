@@ -16,7 +16,7 @@ const createComposition12 = require('./Entities/comp12_particlesMesh')
 exports.createApp = function () {
     const arrConstructors = [
         
-        createComposition01,
+        /*createComposition01,
         createComposition02,  
         createComposition03,  
         createComposition04, 
@@ -27,7 +27,7 @@ exports.createApp = function () {
         createComposition09,
         
         //createComposition10,
-        createComposition11,
+        createComposition11,*/
         createComposition12,
     ]
 

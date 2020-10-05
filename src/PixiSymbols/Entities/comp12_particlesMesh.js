@@ -76,7 +76,7 @@ module.exports = function () {
         const phase = dist % (Math.PI * 4)
         //container.rotation = phase
 
-        for (let i = 0; i < particles.length; i ++) {
+        for (let i in particles) {
             particles[i].update(phase) 
         }
 
