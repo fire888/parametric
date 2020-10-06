@@ -1,12 +1,16 @@
 const { createStudio } = require('./Entities/studio')
-const { effectSimple } = require('./Effects/effectSimple')
+//const { effectSimple } = require('./Effects/effectSimple')
+const { effect_02_voronoi } = require('./Effects/effect_02_voronoi')
 
 
 
 
 exports.createApp = function () {
     const studio = createStudio()
-    const effect = effectSimple()
+
+    //const effect = effectSimple()
+    const effect = effect_02_voronoi()
+    
     studio.addToScene(effect.obj)
 
     //const plane = new THREE.Mesh(
