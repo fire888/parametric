@@ -10,9 +10,9 @@ const createComposition07 = require('./Entities/comp07_rectsScale')
 const createComposition08 = require('./Entities/comp08_rectsSnake') 
 const createComposition09 = require('./Entities/comp09_corridorTri')
 const createComposition10 = require('./Entities/comp10_down') /// one hand bandit
-const createComposition11 = require('./Entities/comp11_tweenCircles') 
-const createComposition12 = require('./Entities/comp12_particlesMesh')
-const createComposition13 = require('./Entities/comp13_voronoi')
+const createComposition11 = require('./Entities/comp11_tweenCircles')
+//const createComposition12 = require('./Entities/comp12_particlesMesh') 
+const createComposition14 = require('./Entities/comp14_rays')
 
 exports.createApp = function () {
     const arrConstructors = [
@@ -30,7 +30,7 @@ exports.createApp = function () {
         //createComposition10,
         createComposition11,*/
         //createComposition12,
-        createComposition13
+        createComposition14,
     ]
 
     const app = createPIXIApp()
