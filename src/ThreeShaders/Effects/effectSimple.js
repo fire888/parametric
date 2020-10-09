@@ -45,7 +45,8 @@ const THREE = require('three'); const shader = { vertexShader: `
         vec3 LightIntensity = phongModel(eyePos, eyeNorm);
         
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}`,
+    }
+`,
 fragmentShader: [
   'varying vec2 vUv;',
   'varying vec3 LightIntensity;',

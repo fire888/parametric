@@ -4,14 +4,15 @@ const createComposition01 = require('./Entities/comp01_fountain')
 const createComposition02 = require('./Entities/comp02_infinitie')
 const createComposition03 = require('./Entities/comp03_circle')
 const createComposition04 = require('./Entities/comp04_flyEarth')
-const createComposition05 = require('./Entities/comp05_spiralEyes')  
+const createComposition05 = require('./Entities/comp05_spiralEyes')
 const createComposition06 = require('./Entities/comp06_spiralLines')
 const createComposition07 = require('./Entities/comp07_rectsScale')
 const createComposition08 = require('./Entities/comp08_rectsSnake') 
 const createComposition09 = require('./Entities/comp09_corridorTri')
 const createComposition10 = require('./Entities/comp10_down') /// one hand bandit
 const createComposition11 = require('./Entities/comp11_tweenCircles') 
-const createComposition12 = require('./Entities/comp12_particlesMesh') 
+const createComposition12 = require('./Entities/comp12_particlesMesh')
+const createComposition13 = require('./Entities/comp13_voronoi')
 
 exports.createApp = function () {
     const arrConstructors = [
@@ -28,7 +29,8 @@ exports.createApp = function () {
         
         //createComposition10,
         createComposition11,*/
-        createComposition12,
+        //createComposition12,
+        createComposition13
     ]
 
     const app = createPIXIApp()
