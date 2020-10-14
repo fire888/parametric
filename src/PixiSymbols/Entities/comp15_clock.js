@@ -19,62 +19,150 @@ const ranRange = (min, max) =>
 /** ***************************************************** */
 
 const D = 400
-const NUM = 350
+
 const PI2 = Math.PI * 2
 const PI = Math.PI
+
 const sin = Math.sin
 const cos = Math.cos
-const NUMS_NUM = 10
+
+const NUM_P1 = 10
 const R = 300
+
+const NUM_P2 = 50
+const R2 = R - 35
+
+const NUM_P3 = 3
+const R3 = R2 - 35
+
+const NUM_P4 = 40
+const R4 = R3 - 35
+
+const NUM_P5 = 40
+const R5 = R4 - 35
+
+const NUM_P6 = 40
+const R6 = R5 - 10
+
+const NUM_P7 = 40
+const R7 = R6 - 10
+
+const NUM_P8 = 40
+const R8 = R7 - 10
+
 
 module.exports = function () {
     const container = new PIXI.Container()
     container.y = D
     container.x = D
 
-    const spr = forms.createCircle(R)
-    container.addChild(spr)
 
-    const particles = []
+    container.addChild(forms.createCircle(R - 15))
+    container.addChild(forms.createCircle(R2 - 15))
+    container.addChild(forms.createCircle(R3 - 15))
+    container.addChild(forms.createCircle(R4 - 15))
+    container.addChild(forms.createCircle(R8 - 15))
 
-    const lines = []
-    for (let i = 0; i < NUMS_NUM; i ++) {
+
+    const points1 = []
+    for (let i = 0; i < NUM_P1; i ++) {
         const spr = forms.createCircleFilled(10)
-        spr.x = sin(PI2 / NUMS_NUM * i) * R
-        spr.y = cos(PI2 / NUMS_NUM * i) * R
         container.addChild(spr)
-        lines.push(spr)
+        points1.push(spr)
+    }
+
+    const points2 = []
+    for (let i = 0; i < NUM_P2; i ++) {
+        const spr = forms.createCircleFilled(10)
+        spr.x = sin(PI2 / NUM_P2 * i) * R2
+        spr.y = cos(PI2 / NUM_P2 * i) * R2
+        container.addChild(spr)
+        points2.push(spr)
+    }
+
+    const points3 = []
+    for (let i = 0; i < NUM_P3; i ++) {
+        const spr = forms.createCircleFilled(10)
+        spr.x = sin(PI2 / NUM_P3 * i) * R3
+        spr.y = cos(PI2 / NUM_P3 * i) * R3
+        container.addChild(spr)
+        points3.push(spr)
+    }
+
+    const points4 = []
+    for (let i = 0; i < NUM_P4; i ++) {
+        const spr = forms.createCircleFilled(10)
+        spr.x = sin(PI2 / NUM_P4 * i) * R4
+        spr.y = cos(PI2 / NUM_P4 * i) * R4
+        container.addChild(spr)
+        points4.push(spr)
+    }
+
+    const points5 = []
+    for (let i = 0; i < NUM_P5; i ++) {
+        const spr = forms.createCircleFilled(3)
+        spr.x = sin(PI2 / NUM_P5 * i) * R5
+        spr.y = cos(PI2 / NUM_P5 * i) * R5
+        container.addChild(spr)
+        points5.push(spr)
+    }
+
+    const points6 = []
+    for (let i = 0; i < NUM_P6; i ++) {
+        const spr = forms.createCircleFilled(3)
+        spr.x = sin(PI2 / NUM_P6 * i) * R6
+        spr.y = cos(PI2 / NUM_P6 * i) * R6
+        container.addChild(spr)
+        points6.push(spr)
+    }
+
+    const points7 = []
+    for (let i = 0; i < NUM_P7; i ++) {
+        const spr = forms.createCircleFilled(3)
+        spr.x = sin(PI2 / NUM_P7 * i) * R7
+        spr.y = cos(PI2 / NUM_P7 * i) * R7
+        container.addChild(spr)
+        points7.push(spr)
     }
 
 
-    /*
-    for (let i = 0; i < NUM; i ++) {
-        const r = ranRange(50, 300)
-        const ray = createPoint(r)
-        container.addChild(ray.line)
-        container.addChild(ray.spr)
-        particles.push(ray)
+    const points8 = []
+    for (let i = 0; i < NUM_P8; i ++) {
+        const spr = forms.createCircleFilled(3)
+        spr.x = sin(PI2 / NUM_P8 * i) * R8
+        spr.y = cos(PI2 / NUM_P8 * i) * R8
+        container.addChild(spr)
+        points8.push(spr)
     }
-    */
 
 
-    const step = (PI2 * 4) / NUM
+
+
     let dist = 0
+
     const update = () => {
         dist += 0.04
 
-        const lOffset = dist % (PI2 / lines.length)
-        for (let i = 0; i < lines.length; i ++) {
-            const spr = lines[i]
-            spr.x = sin(PI2 / NUMS_NUM * i + lOffset) * R
-            spr.y = cos(PI2 / NUMS_NUM * i + lOffset) * R
-        }
-        //container.rotation = -dist
-        //for (let i = 0; i < particles.length; i++) {
-        //    const offset = i * step
-        //    const phase = (dist + offset) % PI2
-        //    particles[i].update(phase, dist)
-        //}
+        const lOffset = dist % (PI2 / NUM_P1)
+        points1.forEach((spr, i) => {
+            spr.x = sin(PI2 / NUM_P1 * i + lOffset) * R
+            spr.y = cos(PI2 / NUM_P1 * i + lOffset) * R
+        })
+
+        
+        points2.forEach((spr, i) => {
+            const d = dist + (i / (NUM_P2 / 2))
+            const modul = PI2 / NUM_P1
+            spr.alpha = 1 - 2 * (d % modul)
+        })
+
+        points4.forEach((spr, i) => {
+            //const d = (dist * 2) + (i / (NUM_P4 / 4))
+            //const modul = PI2 / NUM_P1
+            const s = sin(i / NUM_P4 * PI2 - dist)
+            spr.scale.set(s)
+        })
+
     }
 
     return {
