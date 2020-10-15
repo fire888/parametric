@@ -50,6 +50,16 @@ const R7 = R6 - 10
 const NUM_P8 = 40
 const R8 = R7 - 10
 
+const NUM_P9 = 16
+const R9 = R8 - 30
+
+const NUM_P10 = 16
+const R10 = R9 - 18
+
+const NUM_P11 = 16
+const R11 = R10 - 18
+
+
 
 module.exports = function () {
     const container = new PIXI.Container()
@@ -62,6 +72,10 @@ module.exports = function () {
     container.addChild(forms.createCircle(R3 - 15))
     container.addChild(forms.createCircle(R4 - 15))
     container.addChild(forms.createCircle(R8 - 15))
+    container.addChild(forms.createCircle(R11 - 15))
+    container.addChild(forms.createCircle(R11 - 22))
+    container.addChild(forms.createCircle(R11 - 29))
+    container.addChild(forms.createCircle(R11 - 36))
 
 
     const points1 = []
@@ -136,6 +150,38 @@ module.exports = function () {
     }
 
 
+    const points9 = []
+    for (let i = 0; i < NUM_P9; i ++) {
+        const spr = forms.createCircleFilled(9)
+        spr.x = sin(PI2 / NUM_P9 * i) * R9
+        spr.y = cos(PI2 / NUM_P9 * i) * R9
+        container.addChild(spr)
+        points9.push(spr)
+    }
+
+
+    const points10 = []
+    for (let i = 0; i < NUM_P10; i ++) {
+        const spr = forms.createCircleFilled(9)
+        spr.x = sin(PI2 / NUM_P10 * i) * R10
+        spr.y = cos(PI2 / NUM_P10 * i) * R10
+        container.addChild(spr)
+        points10.push(spr)
+    }
+
+
+    const points11 = []
+    for (let i = 0; i < NUM_P11; i ++) {
+        const spr = forms.createCircleFilled(9)
+        spr.x = sin(PI2 / NUM_P11 * i) * R11
+        spr.y = cos(PI2 / NUM_P11 * i) * R11
+        container.addChild(spr)
+        points11.push(spr)
+    }
+
+
+    const center = forms.createCircleFilled(20)
+    container.addChild(center)
 
 
     let dist = 0
@@ -157,12 +203,28 @@ module.exports = function () {
         })
 
         points4.forEach((spr, i) => {
-            //const d = (dist * 2) + (i / (NUM_P4 / 4))
-            //const modul = PI2 / NUM_P1
             const s = sin(i / NUM_P4 * PI2 - dist)
             spr.scale.set(s)
         })
 
+        points9.forEach((spr, i) => {
+            const s = sin((i / (NUM_P9 / 3)) * PI2 + dist)
+            spr.scale.set(s)
+        })
+
+        points10.forEach((spr, i) => {
+            const s = sin((i / (NUM_P10 / 3)) * PI2 + dist)
+            spr.scale.set(s)
+        })
+
+        points11.forEach((spr, i) => {
+            const s = sin((i / (NUM_P11 / 3)) * PI2 + dist)
+            spr.scale.set(s)
+        })
+
+
+        // center.scale.set(sin(dist))
+        center.alpha = (sin(dist * 5) * 0.5 + 0.5)
     }
 
     return {
@@ -172,39 +234,5 @@ module.exports = function () {
 }
 
 
-function createPoint (radius) {
-    const r = radius
-    const spr = forms.createCircleFilled(5)
-    const line = new PIXI.Graphics()
-
-
-    const update = (phase, dist) => {
-        /*let offset = cos(phase) * (r * .3) + r
-        const center = {
-            x: cos(dist*3) * 100,
-            y: sin(dist*3) * 100
-        }
-
-        const alpha = sin(phase* 5) + 0.7
-
-        spr.x = sin(phase) * offset
-        spr.y = cos(phase) * offset
-        spr.alpha = alpha
-
-
-        line.clear()
-        line.lineStyle(1, 0xffffff)
-            .moveTo(spr.x, spr.y)
-            .lineTo(center.x , center.y + 180)
-            .closePath()
-        line.alpha = alpha*/
-    }
-
-    return {
-        line,
-        spr,
-        update,
-    }
-}
 
 
