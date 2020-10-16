@@ -59,6 +59,9 @@ const R10 = R9 - 18
 const NUM_P11 = 16
 const R11 = R10 - 18
 
+const NUM_P12 = 16
+const R12 = R11 - 18
+
 
 
 module.exports = function () {
@@ -67,21 +70,21 @@ module.exports = function () {
     container.x = D
 
 
-    container.addChild(forms.createCircle(R - 15))
-    container.addChild(forms.createCircle(R2 - 15))
-    container.addChild(forms.createCircle(R3 - 15))
-    container.addChild(forms.createCircle(R4 - 15))
-    container.addChild(forms.createCircle(R8 - 15))
-    container.addChild(forms.createCircle(R11 - 15))
+    //container.addChild(forms.createCircle(R - 15))
+    //container.addChild(forms.createCircle(R2 - 15))
+    //container.addChild(forms.createCircle(R3 - 15))
+    //container.addChild(forms.createCircle(R4 - 15))
+    //container.addChild(forms.createCircle(R8 - 15))
+    //container.addChild(forms.createCircle(R11 - 15))
     //container.addChild(forms.createCircle(R11 - 22))
     //container.addChild(forms.createCircle(R11 - 29))
-    container.addChild(forms.createCircle(R11 - 36))
+    //container.addChild(forms.createCircle(R11 - 36))
 
 
     const points1 = []
     for (let i = 0; i < NUM_P1; i ++) {
         const spr = forms.createCircleFilled(10)
-        container.addChild(spr)
+        //container.addChild(spr)
         points1.push(spr)
     }
 
@@ -179,6 +182,16 @@ module.exports = function () {
         points11.push(spr)
     }
 
+    const points12 = []
+    for (let i = 0; i < NUM_P12; i ++) {
+        const spr = forms.createCircleFilled(5)
+        spr.x = sin(PI2 / NUM_P12 * i) * R12
+        spr.y = cos(PI2 / NUM_P12 * i) * R12
+        container.addChild(spr)
+        points12.push(spr)
+    }
+
+
 
     const center = forms.createCircleFilled(20)
     container.addChild(center)
@@ -201,7 +214,8 @@ module.exports = function () {
         points2.forEach((spr, i) => {
             const d = dist + (i / (NUM_P2 / 2))
             const modul = PI2 / NUM_P1
-            spr.alpha = 1 - 2 * (d % modul)
+            //spr.alpha = 1 - 2 * (d % modul)
+            spr.scale.set(Math.max(1 - 2 * (d % modul), 0))
         })
 
         points4.forEach((spr, i) => {
@@ -229,19 +243,30 @@ module.exports = function () {
             spr.scale.set(s)
         })
 
+
+        /////////////////////////////
+
+
         points9.forEach((spr, i) => {
-            spr.alpha = (dist * 8 + i) % (NUM_P11 / 2) < 1 ? 0 : 1 
+            spr.scale.set(sin(dist * 4 + 1.2) * 0.5 + 0.5)
         })
 
         points10.forEach((spr, i) => {
-            spr.alpha = (dist * 8 + i) % (NUM_P11 / 2) < 1 ? 0 : 1 
+            spr.scale.set(sin(dist * 4 + .8) * 0.5 + 0.5)
         })
 
         points11.forEach((spr, i) => {
-            spr.alpha = (dist * 8 + i) % (NUM_P11 / 2) < 1 ? 0 : 1 
+            spr.scale.set(sin(dist * 4 + .4) * 0.5 + 0.5)
         })
 
-        center.alpha = (sin(dist * 5) * 0.5 + 0.5)
+        points12.forEach((spr, i) => {
+            spr.scale.set(sin(dist * 4) * 0.5 + 0.5)
+        })
+
+        /////////////////////////////////////
+
+
+        center.scale.set(Math.min((sin(dist * 5) * 0.5 + 0.5) * 3, 1))
     }
 
     return {
