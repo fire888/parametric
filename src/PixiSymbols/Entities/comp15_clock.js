@@ -26,11 +26,11 @@ const PI = Math.PI
 const sin = Math.sin
 const cos = Math.cos
 
-const NUM_P1 = 10
-const R = 300
+const NUM_P1 = 65
+const R1 = 300
 
 const NUM_P2 = 50
-const R2 = R - 35
+const R2 = R1 - 35
 
 const NUM_P3 = 3
 const R3 = R2 - 35
@@ -84,7 +84,9 @@ module.exports = function () {
     const points1 = []
     for (let i = 0; i < NUM_P1; i ++) {
         const spr = forms.createCircleFilled(10)
-        //container.addChild(spr)
+        spr.x = sin(PI2 / NUM_P1 * i) * R1
+        spr.y = cos(PI2 / NUM_P1 * i) * R1
+        container.addChild(spr)
         points1.push(spr)
     }
 
@@ -203,17 +205,15 @@ module.exports = function () {
         dist += 0.04
         const phase = dist % PI2
 
-
-        const lOffset = phase
         points1.forEach((spr, i) => {
-            spr.x = sin(PI2 / NUM_P1 * i + lOffset) * R
-            spr.y = cos(PI2 / NUM_P1 * i + lOffset) * R
+            const f = (- (i / (NUM_P1)) + (dist)) % 1
+            spr.scale.set( Math.max(f, -1) )
         })
 
         
         points2.forEach((spr, i) => {
             const d = dist + (i / (NUM_P2 / 2))
-            const modul = PI2 / NUM_P1
+            const modul = PI2 / 10
             //spr.alpha = 1 - 2 * (d % modul)
             spr.scale.set(Math.max(1 - 2 * (d % modul), 0))
         })
