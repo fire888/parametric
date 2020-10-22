@@ -24,12 +24,6 @@ const cos = Math.cos
 
 /** MAPPERS  ****************************************************** */
 
-const threeClock = dist => (spr, i, array) => {
-    const d = dist + (i / (array.length / 2))
-    const modul = PI2 / 10
-    spr.scale.set(Math.max(1 - 2 * (d % modul), 0))
-}
-
 const counterClock = dist => (spr, i, array) => {
     const pointPhase = i / (array.length / 2)
     let f = (dist - pointPhase) % 1
@@ -37,6 +31,32 @@ const counterClock = dist => (spr, i, array) => {
 
     spr.scale.set(f - 1)
 }
+
+
+const counterClockAlpha = dist => (spr, i, array) => {
+    const pointPhase = i / (array.length / 2)
+    let f = (dist - pointPhase) % 1
+    f = Math.min(f * 2, 1)
+
+    spr.alpha = 1 - f
+}
+
+
+
+const threeClock = dist => (spr, i, array) => {
+    const d = dist + (i / (array.length / 2))
+    const modul = PI2 / 10
+    spr.scale.set(Math.max(1 - 2 * (d % modul), 0))
+}
+
+
+const threeClockAlpha = dist => (spr, i, array) => {
+    const d = dist + (i / (array.length / 2))
+    const modul = PI2 / 10
+    spr.alpha = (Math.max(1 - 2 * (d % modul), 0))
+}
+
+
 
 const mapSin = speed => dist => (spr, i, array) => {
     const s = sin(i / array.length * PI2 + (dist * speed))
@@ -52,36 +72,60 @@ const mapItemSign = offset => dist => (spr, i, array) => spr.scale.set(sin(dist 
 const D = 400
 
 const ROUNDS_CONFIG = [
-    { N: 150, R: D - 100, S: 5, MAP: counterClock, },
-    { N: 140, R: D - 135, S: 5, MAP: threeClock, },
-    { N: 3, R: D - 170, S: 5, MAP: mapSin(-1), },
-    { N: 130, R: D - 205, S: 5, MAP: mapSin(-1), },
-    { N: 120, R: D - 240, S: 5, MAP: mapSin(1), },
-    { N: 120, R: D - 250, S: 5, MAP: mapSin(1), },
-    { N: 120, R: D - 260, S: 5, MAP: mapSin(1), },
-    { N: 120, R: D - 270, S: 5, MAP: mapSin(1), },
-    { N: 35, R: D - 285, S: 5, MAP: mapItemSign(2), },
-    { N: 35, R: D - 300, S: 5, MAP: mapItemSign(1.7), },
-    { N: 35, R: D - 315, S: 5, MAP: mapItemSign(1.4), },
-    { N: 35, R: D - 330, S: 5, MAP: mapItemSign(1.1), },
-    { N: 35, R: D - 345, S: 5, MAP: mapItemSign(0.8), },
-    { N: 35, R: D - 360, S: 5, MAP: mapItemSign(0.5), },
-    { N: 35, R: D - 375, S: 5, MAP: mapItemSign(0.2), },
-    //{ N: 35, R: D - 375, S: 5, MAP: mapItemSign(0), },
+    { type: 'POINT', N: 150, R: D - 100, S: 5, MAP: counterClock, },
+    { type: 'LINE', N: 150, R: D - 100, S: 5, MAP: counterClockAlpha, },
+    { type: 'POINT', N: 150, R: D - 125, S: 5, MAP: counterClock, },
+    { type: 'POINT', N: 140, R: D - 135, S: 5, MAP: threeClock, },
+    { type: 'LINE', N: 140, R: D - 135, S: 5, MAP: threeClockAlpha, },
+    { type: 'POINT', N: 140, R: D - 160, S: 5, MAP: threeClock, },
+    { type: 'POINT', N: 3, R: D - 183, S: 5, MAP: mapSin(-1), },
+    { type: 'POINT', N: 130, R: D - 205, S: 5, MAP: mapSin(-1), },
+    { type: 'POINT', N: 120, R: D - 240, S: 5, MAP: mapSin(1), },
+    { type: 'POINT', N: 120, R: D - 250, S: 5, MAP: mapSin(1), },
+    { type: 'POINT', N: 120, R: D - 260, S: 5, MAP: mapSin(1), },
+    { type: 'POINT', N: 120, R: D - 270, S: 5, MAP: mapSin(1), },
+    { type: 'POINT', N: 35, R: D - 285, S: 5, MAP: mapItemSign(2), },
+    { type: 'POINT', N: 35, R: D - 300, S: 5, MAP: mapItemSign(1.7), },
+    { type: 'POINT', N: 35, R: D - 315, S: 5, MAP: mapItemSign(1.4), },
+    { type: 'POINT', N: 35, R: D - 330, S: 5, MAP: mapItemSign(1.1), },
+    { type: 'POINT', N: 35, R: D - 345, S: 5, MAP: mapItemSign(0.8), },
+    { type: 'POINT', N: 35, R: D - 360, S: 5, MAP: mapItemSign(0.5), },
+    { type: 'POINT', N: 35, R: D - 375, S: 5, MAP: mapItemSign(0.2), },
 ]
+
+
+const DRAW = {
+    'LINE': (data, i) => {
+        const { R, N } = data
+        const R_MIN = R - 25
+
+        const line = new PIXI.Graphics()
+        line.lineStyle(1, 0xffffff)
+            .moveTo(sin(PI2 / N * i) * R, cos(PI2 / N * i) * R)
+            .lineTo(sin(PI2 / N * i) * R_MIN, cos(PI2 / N * i) * R_MIN)
+            .closePath()
+        return line
+    },
+    'POINT': (data, i) => {
+        const { S, R, N } = data
+
+        const spr = forms.createCircleFilled(S)
+        spr.x = sin(PI2 / N * i) * R
+        spr.y = cos(PI2 / N * i) * R
+        return spr
+    } 
+}
 
 
 
 /** CREATE **************************************************** */
 
 const createCircleOfPoints = data => {
-    const { S, R, N } = data
+    const { S, R, N, type } = data
 
     const container = new PIXI.Container()
     for (let i = 0; i < N; i ++) {
-        const spr = forms.createCircleFilled(S)
-        spr.x = sin(PI2 / N * i) * R
-        spr.y = cos(PI2 / N * i) * R
+        const spr = DRAW[type](data, i)
         container.addChild(spr)
     }
     return container
