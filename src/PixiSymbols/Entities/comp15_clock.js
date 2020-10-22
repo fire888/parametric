@@ -25,35 +25,36 @@ const cos = Math.cos
 /** MAPPERS  ****************************************************** */
 
 const counterClock = dist => (spr, i, array) => {
-    const pointPhase = i / (array.length / 2)
-    let f = (dist - pointPhase) % 1
-    f = Math.min(f * 2, 1)
-
-    spr.scale.set(f - 1)
+    const d = ((dist * 2) + PI2)
+    const pointPhase = (i / (array.length / 2)) * PI 
+    let f = (d - pointPhase) % PI
+    spr.scale.set( Math.min(((PI - f) / PI), 1))
 }
 
 
 const counterClockAlpha = dist => (spr, i, array) => {
-    const pointPhase = i / (array.length / 2)
-    let f = (dist - pointPhase) % 1
-    f = Math.min(f * 2, 1)
+    const d = ((dist * 2) + PI2)
+    const pointPhase = (i / (array.length / 2)) * PI 
+    let f = (d - pointPhase) % PI
+    spr.alpha = Math.min(((PI - f) / PI), 1)
 
-    spr.alpha = 1 - f
 }
 
 
 
 const threeClock = dist => (spr, i, array) => {
-    const d = dist + (i / (array.length / 2))
-    const modul = PI2 / 10
-    spr.scale.set(Math.max(1 - 2 * (d % modul), 0))
+    const d = ((dist * 2) + PI2)
+    const pointPhase = (i / (array.length / 3)) * PI 
+    let f = (d + pointPhase) % PI
+    spr.scale.set((PI - f) / PI)
 }
 
 
 const threeClockAlpha = dist => (spr, i, array) => {
-    const d = dist + (i / (array.length / 2))
-    const modul = PI2 / 10
-    spr.alpha = (Math.max(1 - 2 * (d % modul), 0))
+    const d = ((dist * 2) + PI2)
+    const pointPhase = (i / (array.length / 3)) * PI 
+    let f = (d + pointPhase) % PI
+    spr.alpha = ((PI - f) / PI)
 }
 
 
@@ -63,7 +64,10 @@ const mapSin = speed => dist => (spr, i, array) => {
     spr.scale.set(s)
 }
 
-const mapItemSign = offset => dist => (spr, i, array) => spr.scale.set(sin(dist * 4  + offset) * 0.5 + 0.5)
+const mapItemSign = offset => dist => (spr, i, array) => { 
+    const d = dist * 4
+    spr.scale.set(sin(d + offset) * 0.5 + 0.5)
+}
 
 
 
@@ -72,13 +76,13 @@ const mapItemSign = offset => dist => (spr, i, array) => spr.scale.set(sin(dist 
 const D = 400
 
 const ROUNDS_CONFIG = [
-    { type: 'POINT', N: 150, R: D - 100, S: 5, MAP: counterClock, },
-    { type: 'LINE', N: 150, R: D - 100, S: 5, MAP: counterClockAlpha, },
-    { type: 'POINT', N: 150, R: D - 125, S: 5, MAP: counterClock, },
-    { type: 'POINT', N: 140, R: D - 135, S: 5, MAP: threeClock, },
-    { type: 'LINE', N: 140, R: D - 135, S: 5, MAP: threeClockAlpha, },
-    { type: 'POINT', N: 140, R: D - 160, S: 5, MAP: threeClock, },
-    { type: 'POINT', N: 3, R: D - 183, S: 5, MAP: mapSin(-1), },
+    { type: 'POINT', N: 150, R: D - 50, S: 5, MAP: counterClock, },
+    //{ type: 'LINE', N: 150, R: D - 50, S: 5, MAP: counterClockAlpha, },
+    { type: 'POINT', N: 150, R: D - 60, S: 5, MAP: counterClock, },
+    { type: 'POINT', N: 140, R: D - 120, S: 5, MAP: threeClock, },
+    //{ type: 'LINE', N: 140, R: D - 135, S: 5, MAP: threeClockAlpha, },
+    { type: 'POINT', N: 140, R: D - 140, S: 5, MAP: threeClock, },
+    { type: 'POINT', N: 3, R: D - 180, S: 5, MAP: mapSin(-1), },
     { type: 'POINT', N: 130, R: D - 205, S: 5, MAP: mapSin(-1), },
     { type: 'POINT', N: 120, R: D - 240, S: 5, MAP: mapSin(1), },
     { type: 'POINT', N: 120, R: D - 250, S: 5, MAP: mapSin(1), },
@@ -97,7 +101,7 @@ const ROUNDS_CONFIG = [
 const DRAW = {
     'LINE': (data, i) => {
         const { R, N } = data
-        const R_MIN = R - 25
+        const R_MIN = R - 40
 
         const line = new PIXI.Graphics()
         line.lineStyle(1, 0xffffff)
@@ -155,7 +159,9 @@ module.exports = function () {
     let dist = 0
 
     const update = () => {
-        dist += PI2 * 0.005
+        dist += PI2 / 200
+        dist = dist % PI2
+        //console.log(dist)
 
         rounds.forEach((round, i) => round.forEach(ROUNDS_CONFIG[i].MAP(dist)))
         center.scale.set(sin(dist * 4) * 0.5 + 0.5)
